@@ -20,7 +20,9 @@ import {
   TableRow,
   Text,
   ToggleGroup,
-  hubspot
+  Modal,
+  hubspot,
+  ModalBody
 } from "@hubspot/ui-extensions";
 import _ from 'lodash';
 import moment from 'moment';
@@ -48,6 +50,7 @@ hubspot.extend(({ context, runServerlessFunction, actions }) => (
 const Extension = ({ context, runServerless, sendAlert, fetchProperties }) => {
 
   const [locations, setLocations] = useState([]);
+  
   const [locationsOnPage, setLocationsOnPage] = useState([]);
   const [vehicles, setVehicles] = useState([]);
   const [vehiclesOnPage, setVehiclesOnPage] = useState([]);
@@ -59,6 +62,8 @@ const Extension = ({ context, runServerless, sendAlert, fetchProperties }) => {
   const [locationPage, setLocationPage] = useState(1);
 
   const [zipCode, setZipCode] = useState("");
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
 
   const [currentPage, setCurrentPage] = useState(1); // For controlling current page
@@ -127,6 +132,37 @@ const Extension = ({ context, runServerless, sendAlert, fetchProperties }) => {
           {locationFetching && <LoadingSpinner />}
         </Text>
       </Flex>
+
+      
+
+      <Flex>
+        <Button 
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+          overlay={
+            isModalOpen && ( // Only render modal when it's open
+              <Modal 
+                id="default-modal" 
+                title="Available Postal Codes" 
+                width="lg"
+                onClose={() => setIsModalOpen(false)} // Close modal state when dismissed
+              >
+                <ModalBody>
+                  <Text>Here are the available postal codes:</Text>
+                </ModalBody>
+              </Modal>
+            )
+          }
+          variant="primary"
+          size="md"
+          type="button"
+        >
+          View Postal Codes
+        </Button>
+      </Flex>
+
+      <Divider />
       <Table
         bordered={true}
         paginated={true}
