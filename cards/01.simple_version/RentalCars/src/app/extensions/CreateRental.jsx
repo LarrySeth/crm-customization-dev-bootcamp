@@ -173,7 +173,7 @@ const Extension = ({ context, runServerless, sendAlert, fetchProperties }) => {
           <TableRow>
             <TableHeader>Zip</TableHeader>
             <TableHeader>Address</TableHeader>
-            <TableHeader>Available Vehicles</TableHeader>
+            <TableHeader>Available Vehiclesd</TableHeader>
           </TableRow>
         </TableHead>
         <TableBody>
